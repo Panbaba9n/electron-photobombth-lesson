@@ -6,14 +6,15 @@ const menuTemplate = require('./menu');
 let mainWindow;
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
-        width: 1200,
+        // width: 1200, // when using devTools
+        width: 893,
         height: 725,
         resizable: false,
     });
 
     mainWindow.loadURL(`file://${__dirname}/capture.html`);
 
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     images.mkdir(images.getPicturesDir(app));
 

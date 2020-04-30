@@ -1,4 +1,5 @@
 const { app } = require('electron');
+const images = require('./images');
 const isMac = process.platform === 'darwin';
 
 module.exports = (mainWindow) => {
@@ -43,8 +44,25 @@ module.exports = (mainWindow) => {
                     label: 'Ascii',
                     type: 'radio',
                     click: () => mainWindow.webContents.send('effect-choose', 'ascii')
+                },
+                {
+                    label: 'Daltonize',
+                    type: 'radio',
+                    click: () => mainWindow.webContents.send('effect-choose', 'daltonize')
+                },
+                {
+                    label: 'Hex',
+                    type: 'radio',
+                    click: () => mainWindow.webContents.send('effect-choose', 'hex')
                 }
             ]
+        },
+        {
+            label: 'View',
+            submenu: [{
+                label: 'Photos Directory',
+                click: () => images.openDir(images.getPicturesDir(app))
+            }]
         },
         // { role: 'fileMenu' }
         {
