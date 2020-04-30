@@ -1,6 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 
 const images = require('./images');
+const menuTemplate = require('./menu');
 
 let mainWindow;
 app.on('ready', () => {
@@ -19,6 +20,9 @@ app.on('ready', () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+
+    const menuContents = Menu.buildFromTemplate(menuTemplate(mainWindow));
+    Menu.setApplicationMenu(menuContents);
 });
 
 ipcMain.on('image-captured', (evt, contents) => {

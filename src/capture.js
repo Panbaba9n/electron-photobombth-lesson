@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const counterEl = document.getElementById('counter');
     const flashEl = document.getElementById('flash');
 
-    const ctx = canvasEl.getContext('2d');
+    // const ctx = canvasEl.getContext('2d');
 
     seriously = new Seriously();
     videoSrc = seriously.source('#video');
@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
     recordEl.addEventListener('click', () => {
         countdown.start(counterEl, 3, () => {
             flash(flashEl);
-            const bytes = video.captureBytes(videoEl, ctx, canvasEl);
+            const bytes = video.captureBytesFromLiveCanvas(canvasEl);
             ipcRenderer.send('image-captured', bytes);
             photosEl.appendChild(formatImgTag(document, bytes));
         });
@@ -69,4 +69,12 @@ function formatImgTag(doc, bytes) {
 
 ipcRenderer.on('image-removed', (evt, index) => {
     document.getElementById('photos').removeChild(Array.from(document.querySelectorAll('.photo'))[index]);
+});
+
+ipcRenderer.on('effect-choose', (evt, effectName) => {
+    effects.choose(seriously, videoSrc, canvasTarget, effectName);
+})
+
+ipcRenderer.on('effect-cycle', (evt) => {
+    effects.cycle(seriously, videoSrc, canvasTarget);
 });

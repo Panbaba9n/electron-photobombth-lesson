@@ -22,6 +22,9 @@ exports.captureBytes = (videoEl, ctx, canvasEl) => {
     return canvasEl.toDataURL('image/png');
 }
 
+exports.captureBytesFromLiveCanvas = (canvasEl) => {
+    return canvasEl.toDataURL('image/png');
+}
 
 function handleSuccess(videoEl, stream) {
     videoEl.src = window.URL.createObjectURL(stream);
